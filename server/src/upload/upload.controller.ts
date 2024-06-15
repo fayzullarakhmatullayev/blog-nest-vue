@@ -10,6 +10,6 @@ export class UploadController {
     if (!file) {
       throw new BadRequestException('File is not provided')
     }
-    return { url: `/uploads/${file.filename}` } // Return the file URL or any other relevant info
+    return { url: `/uploads/${file.filename}` }
   }
 }

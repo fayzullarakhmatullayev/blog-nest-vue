@@ -15,19 +15,16 @@ export class CommentGateway implements OnGatewayConnection, OnGatewayDisconnect 
 
   async handleConnection(socket: Socket) {
     console.log(`Client connected: ${socket.id}`)
-    // Additional logic on connection if needed
   }
 
   async handleDisconnect(socket: Socket) {
     console.log(`Client disconnected: ${socket.id}`)
-    // Additional logic on disconnection if needed
   }
 
   @SubscribeMessage('newComment')
   async handleNewComment(client: Socket, payload: any) {
     const newComment = await this.commentService.create(payload)
 
-    // Emit the new comment to all connected clients
     this.server.emit('newComment', newComment)
   }
 
@@ -35,7 +32,6 @@ export class CommentGateway implements OnGatewayConnection, OnGatewayDisconnect 
   async handleDeleteComment(client: Socket, commentId: number, @CurrentUser() user: User) {
     const deletedComment = await this.commentService.delete(commentId, user.id)
     if (deletedComment.deleted) {
-      // Emit the deleted comment ID to all connected clients
       this.server.emit('deleteComment', commentId)
     }
   }

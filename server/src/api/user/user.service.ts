@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { User } from './entities/user.entity'
 import { Repository } from 'typeorm'
 import * as bcrypt from 'bcryptjs'
+import { USER_EMAIL_NOT_FOUND, USER_ID_NOT_FOUND } from './user.constants'
 
 @Injectable()
 export class UserService {
@@ -19,7 +20,7 @@ export class UserService {
   async findByEmail(email: string): Promise<User | undefined> {
     const user = this.usersRepository.findOne({ where: { email } })
     if (!user) {
-      throw new NotFoundException(`User with this email ${email} not found`)
+      throw new NotFoundException(USER_EMAIL_NOT_FOUND(email))
     }
 
     return user
@@ -28,7 +29,7 @@ export class UserService {
   async findById(id: number): Promise<User> {
     const user = await this.usersRepository.findOne({ where: { id } })
     if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`)
+      throw new NotFoundException(USER_ID_NOT_FOUND(id))
     }
     return user
   }
@@ -37,7 +38,7 @@ export class UserService {
     const user = await this.findById(id)
 
     if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`)
+      throw new NotFoundException(USER_ID_NOT_FOUND(id))
     }
 
     const updatedUser = {
@@ -55,7 +56,7 @@ export class UserService {
   async delete(id: number): Promise<void> {
     const result = await this.usersRepository.delete(id)
     if (result.affected === 0) {
-      throw new NotFoundException(`User with ID ${id} not found`)
+      throw new NotFoundException(USER_ID_NOT_FOUND(id))
     }
   }
 }

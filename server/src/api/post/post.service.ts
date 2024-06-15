@@ -7,6 +7,7 @@ import { Post } from './entities/post.entity'
 import { Repository } from 'typeorm'
 import { UserService } from '../user/user.service'
 import { PaginatedPostsDto } from './dto/paginated-posts.dto'
+import { ID_MUST_BE_NUMBER, NOT_ALLOWED_DELETE_POST, NOT_ALLOWED_UPDATE_POST, POST_NOT_FOUND } from './post.constants'
 
 @Injectable()
 export class PostService {
@@ -48,7 +49,7 @@ export class PostService {
   }
 
   async findById(id: number): Promise<Post> {
-    if (typeof Number(id) !== 'number') throw new NotFoundException('ID must be a number')
+    if (typeof Number(id) !== 'number') throw new NotFoundException(ID_MUST_BE_NUMBER)
     const post = await this.postsRepository
       .createQueryBuilder('post')
       .where('post.id = :id', { id })
@@ -79,7 +80,7 @@ export class PostService {
     const post = await this.findById(id)
 
     if (post.author.id !== userId) {
-      throw new ForbiddenException('You are not allowed to update this post')
+      throw new ForbiddenException(NOT_ALLOWED_UPDATE_POST)
     }
 
     if (updatePostDto.categoryIds) {
@@ -95,11 +96,11 @@ export class PostService {
     const post = await this.findById(id)
 
     if (post.author.id !== userId) {
-      throw new ForbiddenException('You are not allowed to delete this post')
+      throw new ForbiddenException(NOT_ALLOWED_DELETE_POST)
     }
     const result = await this.postsRepository.delete(id)
     if (result.affected === 0) {
-      throw new NotFoundException(`Post with ID ${id} not found`)
+      throw new NotFoundException(POST_NOT_FOUND(id))
     }
   }
 }
