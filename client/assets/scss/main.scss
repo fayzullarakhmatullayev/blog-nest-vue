@@ -1,0 +1,125 @@
+*:not(.p-component, .p-component *) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-gray: rgb(232, 232, 232);
+  --color-light-gray: #f8fafc;
+  --color-dark-gray: rgb(139, 139, 139);
+  --color-white: rgb(255, 255, 255);
+  --color-black: rgb(0, 0, 0);
+  --color-green: rgb(0, 150, 178);
+  --color-dark-blue: rgb(48, 61, 77);
+  --color-charcoal: rgba(41, 41, 41, 1);
+  --card-border: 1px solid #e2e8f0;
+  --color-blue: #3b82f6;
+}
+
+body {
+  background-color: var(--color-light-gray);
+  color: var(--color-black);
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: 'slnt' 0;
+  font-family: 'Inter', sans-serif;
+
+  overflow-x: hidden;
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-blue);
+  border-radius: 6px;
+}
+
+.container {
+  max-width: 1270px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.app {
+  &-header {
+    padding: 20px 0;
+    border-bottom: var(--card-border);
+  }
+  &-wrapper {
+    display: flex;
+    height: calc(100dvh - 79px);
+  }
+
+  &-main {
+    width: calc(100% - 350px);
+    padding: 0 20px 20px 0;
+    overflow-y: auto;
+  }
+  &-sidebar {
+    width: 350px;
+    padding: 0 5px;
+    border-left: var(--card-border);
+    height: calc(100dvh - 79px);
+    overflow-y: auto;
+    position: relative;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &--title {
+      position: sticky;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      background-color: var(--color-light-gray);
+      padding: 13px;
+      font-size: 18px;
+      color: var(--color-charcoal);
+      border-bottom: var(--card-border);
+    }
+
+    &--wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 14px 0;
+    }
+  }
+}
+
+.p-tabview .p-tabview-nav-btn.p-link {
+  box-shadow: unset !important;
+  background: rgba($color: #f8fafc, $alpha: 0.8);
+}
+
+.p-tabview-nav-container {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.p-tabview .p-tabview-nav,
+.p-tabview .p-tabview-panels,
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  background: #f8fafc;
+}

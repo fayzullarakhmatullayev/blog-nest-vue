@@ -2,14 +2,22 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTabl
 import { Category } from 'src/api/category/entities/category.entity'
 import { Comment } from 'src/api/comment/entities/comment.entity'
 import { User } from 'src/api/user/entities/user.entity'
+import { Max } from 'class-validator'
 
 @Entity()
 export class Post {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({
+    type: 'bigint',
+  })
   id: number
 
   @Column()
   title: string
+
+  @Column({
+    nullable: true,
+  })
+  shortContent: string
 
   @Column()
   content: string
